@@ -1026,7 +1026,7 @@ async function loadData() {
      latestWalkDay | latestWalkTitle | latestWalkSummary | latestWalkMiles |
      latestWalkSteps | latestWalkWeather | latestWalkLocation | latestWalkPhoto
   */
-  if (configRows && configRows.length > 0) {
+  if (configRows && configRows.length > 0 && Object.values(configRows[0]).some(v => v !== '')) {
     const r = configRows[0];
     challengeData = {
       goalMiles:            Number(r.goalMiles)        || 150,
@@ -1054,7 +1054,7 @@ async function loadData() {
      Expected columns: mile | status | name | url
      status values: available | sponsored | completed
   */
-  if (milesRows && milesRows.length > 0) {
+  if (milesRows && milesRows.length > 0 && milesRows.some(r => r.mile)) {
     sponsorData = milesRows.map(r => ({
       mile:   Number(r.mile),
       status: r.status || 'available',
@@ -1432,20 +1432,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLightbox();
   requestAnimationFrame(initReveal);
 
-  // Then fetch live data from Google Sheets and re-render
+  // Then fetch live data from Google Sheets and re-render.
+  // Fallback data is always rendered first so the page is never blank.
+  // loadData() only overwrites a data source if the Sheet tab has real content.
   const hasSheets = Object.values(SHEET_URLS).some(u => u !== '');
   if (hasSheets) {
-    showLoading();
     await loadData();
-    hideLoading();
-    // Re-render everything that could have changed
+    // Re-render everything — if Sheet tabs were empty, fallback data is unchanged
     renderStats();
     renderCountdown();
     renderMileCards();
     renderAdventureCard();
     renderBusinesses();
     renderGallery();
-    // Re-observe any new .reveal elements added by renders
     requestAnimationFrame(initReveal);
   }
 });
