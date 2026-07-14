@@ -14,7 +14,7 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Event","name":"Forrest's 150 Mile Walking Challenge","description":"A 7-year-old walking 150 miles during the summer holidays to raise money for new playground equipment at Sele First School, Hexham.","startDate":"2025-07-21","endDate":"2025-09-01","location":{"@type":"Place","name":"Hexham, Northumberland"},"organizer":{"@type":"Person","name":"Forrest"}}
   </script>
-  <title>Forrest's 150 Mile Challenge - Sele First School, Hexham</title>
+  <title>Forrest's 150 Mile Challenge — Sele First School, Hexham</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -401,7 +401,7 @@
         Summer 2025 &nbsp;·&nbsp; <em>Hexham, Northumberland</em>
       </div>
       <h1 class="hero__title" id="hero-h1">Forrest's<br><em>150 Mile</em><br>Challenge</h1>
-      <p class="hero__subtitle">A 7-year-old walking 150 miles across the whole of summer - even while on holiday in Venice - to raise money for new playground equipment at Sele First School.</p>
+      <p class="hero__subtitle">A 7-year-old walking 150 miles across the whole of summer — even while on holiday in Venice — to raise money for new playground equipment at Sele First School.</p>
       <div class="hero__actions">
         <a href="https://friendsofselefirst.school/fundraise/forrests-150-summer-challenge--mqy7ow5z" class="btn-primary" target="_blank" rel="noopener noreferrer">❤️ Sponsor Forrest</a>
         <button class="btn-ghost" id="hero-share-btn"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share</button>
@@ -556,12 +556,12 @@
       <div class="meet__text reveal" style="transition-delay:.1s">
         <span class="label"><i class="fa-solid fa-child" aria-hidden="true"></i> Meet Forrest</span>
         <h2 class="section-title" id="meet-title">The Boy Behind the Big Idea</h2>
-        <p>Forrest is seven years old and has just finished Year 2 at Sele First School in Hexham. He's curious, determined, and, when he sets his mind to something... unstoppable.</p>
+        <p>Forrest is seven years old and has just finished Year 2 at Sele First School in Hexham. He's curious, determined, and - when he sets his mind to something - unstoppable.</p>
         <p>When his class was asked to choose their own summer fundraising challenge, Forrest didn't want to pick something easy. He wanted to do something that would make people sit up and think, <em>"That's genuinely impressive."</em></p>
         <div class="pull-quote">
           <p>"I want to walk 150 miles because it's really hard" - and that's the point. If it was easy, it wouldn't be worth sponsoring.</p>
         </div>
-        <p>That means roughly 3.5 miles every single day for six weeks - including while his family are on holiday in Venice. Whatever the weather, whatever the day, Forrest keeps walking.</p>
+        <p>That means roughly 3.5 miles every single day for six weeks — including while his family are on holiday in Venice. Whatever the weather, whatever the day, Forrest keeps walking.</p>
         <div class="meet__facts">
           <span class="fact-chip"><i class="fa-solid fa-cake-candles" aria-hidden="true"></i> Age 7</span>
           <span class="fact-chip"><i class="fa-solid fa-school" aria-hidden="true"></i> Class 2A</span>
@@ -775,7 +775,7 @@
     <div class="share-section__inner reveal">
       <span class="label"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Spread the Word</span>
       <h2 class="section-title" id="share-title">Help Forrest Go Further</h2>
-      <p class="section-intro">The more people who hear about this, the more miles get sponsored. Share with your friends, your street, your local group — every share matters.</p>
+      <p class="section-intro">The more people who hear about this, the more miles get sponsored. Share with your friends, your street, your local group - every share matters.</p>
       <div class="share-buttons">
         <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffriendsofselefirst.school%2Ffundraise%2Fforrests-150-summer-challenge--mqy7ow5z" class="share-btn share-btn--fb" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i> Facebook</a>
         <a href="https://wa.me/?text=Check%20out%20Forrest%27s%20150%20Mile%20Walking%20Challenge%20-%20a%207-year-old%20walking%20150%20miles%20for%20Sele%20First%20School!%20https%3A%2F%2Ffriendsofselefirst.school%2Ffundraise%2Fforrests-150-summer-challenge--mqy7ow5z" class="share-btn share-btn--wa" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
@@ -893,67 +893,197 @@
 
 <script>
 'use strict';
+
 /* ============================================================
-   A. DATA LAYER
-   All values in one object. Replace the body of loadData()
-   with a fetch() to a Google Sheets JSON endpoint to go live.
-   Expected future sheet tabs: config, walks, gallery, miles, businesses, faq
+   A. GOOGLE SHEETS CSV URLS
+   ─────────────────────────────────────────────────────────────
+   Paste your five published CSV URLs below.
+   How to get them:
+     1. Open your Google Sheet
+     2. File → Share → Publish to web
+     3. Select each tab name from the first dropdown
+     4. Choose "Comma-separated values (.csv)" from the second
+     5. Click Publish and copy the URL
+     6. Paste it into the matching variable below
+   ─────────────────────────────────────────────────────────────
+   Leave a URL as '' to use the hardcoded fallback for that tab.
 ============================================================ */
-const challengeData = {
-  goalMiles:       150,
-  completedMiles:  0,
-  steps:           0,
-  daysCompleted:   0,
-  daysRemaining:   42,
-  totalDays:       42,
-  amountRaised:    0,
-  fundraisingGoal: 2000,
-  sponsors:        0,
-  challengeEnd:    '2025-09-01T17:00:00',
+const SHEET_URLS = {
+  config:     '', // Tab: config    — daily stats
+  miles:      '', // Tab: miles     — 150 mile sponsorships
+  walks:      '', // Tab: walks     — daily walk log
+  businesses: '', // Tab: businesses — supporter logos
+  gallery:    '', // Tab: gallery   — photo URLs
 };
 
-/* Mile sponsorship data — all 150 miles.
-   Future: fetch from Google Sheets "miles" tab */
-const sponsorData = Array.from({length:150}, (_,i) => ({
-  mile:   i+1,
-  status: 'available', // 'available' | 'sponsored' | 'completed'
-  name:   '',
-  url:    '',
-}));
-
-/* FAQ content — future: Google Sheets "faq" tab */
-const faqData = [
-  {
-    q: 'How do I sponsor Forrest?',
-    a: 'Click any of the "Sponsor Forrest" buttons on this page. You\'ll be taken to our secure donation page where you can make a contribution. You can sponsor a specific mile or donate any amount you\'d like.'
+/* ============================================================
+   B. FALLBACK DATA
+   Used when Sheet URLs aren't set yet (or fetch fails).
+   This keeps the site fully functional from day one.
+============================================================ */
+const FALLBACK = {
+  config: {
+    goalMiles:       150,
+    completedMiles:  0,
+    steps:           0,
+    daysCompleted:   0,
+    daysRemaining:   42,
+    totalDays:       42,
+    amountRaised:    0,
+    fundraisingGoal: 2000,
+    sponsors:        0,
+    challengeEnd:    '2025-09-01T17:00:00',
+    latestWalkDay:   0,
+    latestWalkTitle: 'The Challenge Begins!',
+    latestWalkSummary: 'The summer holidays have started and Forrest is lacing up his boots. His first walk will be logged right here - with a photo, the route, and the full story. Come back soon!',
+    latestWalkMiles:   0,
+    latestWalkSteps:   0,
+    latestWalkWeather: '',
+    latestWalkLocation:'Hexham',
+    latestWalkPhoto:   '',
   },
-  {
-    q: 'How are donations collected?',
-    a: 'All donations are processed securely through our fundraising platform. Every penny goes directly to Friends of Sele First School for the playground equipment. You\'ll receive a confirmation email once your donation is processed.'
-  },
-  {
-    q: 'What happens if Forrest reaches 150 miles early?',
-    a: 'Then Forrest is a legend! All sponsor pledges still stand. We may set an exciting stretch goal to keep the momentum going — so keep an eye on this page.'
-  },
-  {
-    q: 'Will I be updated on Forrest\'s progress?',
-    a: 'Yes! This website is updated regularly with daily walk logs, photos, and new stats. Follow us on social media to get the latest news straight to your feed.'
-  },
-  {
-    q: 'Can local businesses get involved?',
-    a: 'Absolutely — we\'d be delighted! Businesses can sponsor a mile, have their logo in our Community Supporters section, or simply spread the word. Get in touch using the button in the Community Supporters section above.'
-  },
-  {
-    q: 'Is Venice really part of the route?',
-    a: 'It is! Forrest\'s family holiday in Venice falls during the challenge, and he has committed to walking every single day regardless. Some of those 150 miles will be along the canals of one of the world\'s most beautiful cities!'
-  }
-];
+  miles: Array.from({length:150}, (_,i) => ({
+    mile: i+1, status: 'available', name: '', url: '',
+  })),
+  businesses: [],
+  gallery: [],
+};
 
 /* ============================================================
-   B. UTILITIES
+   C. CSV PARSER
+   Converts a Google Sheets CSV string into an array of objects
+   using the first row as column headers.
 ============================================================ */
-const fmt     = n  => Number(n).toLocaleString('en-GB');
-const setText = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  // Parse header row, strip BOM and whitespace
+  const headers = lines[0].replace(/^\uFEFF/, '').split(',').map(h => h.trim().replace(/^"|"$/g,''));
+  return lines.slice(1).map(line => {
+    // Handle quoted fields containing commas
+    const values = [];
+    let cur = '', inQuote = false;
+    for (const ch of line) {
+      if (ch === '"') { inQuote = !inQuote; }
+      else if (ch === ',' && !inQuote) { values.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    values.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (values[i] || '').replace(/^"|"$/g,'').trim(); });
+    return obj;
+  });
+}
+
+/* ============================================================
+   D. FETCH ONE CSV TAB
+   Returns parsed rows, or null on failure.
+============================================================ */
+async function fetchTab(url) {
+  if (!url) return null;
+  try {
+    // Append cache-bust so browser doesn't serve a stale CSV
+    const res = await fetch(url + '&t=' + Date.now(), {cache: 'no-store'});
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return parseCSV(await res.text());
+  } catch (err) {
+    console.warn('Sheet fetch failed:', err);
+    return null;
+  }
+}
+
+/* ============================================================
+   E. LIVE DATA — challengeData + arrays
+   These are the single source of truth that all render
+   functions read from. loadData() fills them from the Sheet,
+   or leaves the fallbacks in place.
+============================================================ */
+let challengeData  = {...FALLBACK.config};
+let sponsorData    = [...FALLBACK.miles];
+let businessData   = [...FALLBACK.businesses];
+let galleryData    = [...FALLBACK.gallery];
+
+/* ============================================================
+   F. LOAD DATA FROM SHEETS
+   Fetches all tabs in parallel, then maps CSV rows into the
+   same shape that all existing render functions already expect.
+   Nothing else in the file needs to change.
+============================================================ */
+async function loadData() {
+  const [configRows, milesRows, walksRows, bizRows, galleryRows] =
+    await Promise.all([
+      fetchTab(SHEET_URLS.config),
+      fetchTab(SHEET_URLS.miles),
+      fetchTab(SHEET_URLS.walks),
+      fetchTab(SHEET_URLS.businesses),
+      fetchTab(SHEET_URLS.gallery),
+    ]);
+
+  /* — CONFIG TAB —
+     Expected columns (single data row):
+     goalMiles | completedMiles | steps | daysCompleted | daysRemaining |
+     totalDays | amountRaised | fundraisingGoal | sponsors | challengeEnd |
+     latestWalkDay | latestWalkTitle | latestWalkSummary | latestWalkMiles |
+     latestWalkSteps | latestWalkWeather | latestWalkLocation | latestWalkPhoto
+  */
+  if (configRows && configRows.length > 0) {
+    const r = configRows[0];
+    challengeData = {
+      goalMiles:            Number(r.goalMiles)        || 150,
+      completedMiles:       Number(r.completedMiles)   || 0,
+      steps:                Number(r.steps)            || 0,
+      daysCompleted:        Number(r.daysCompleted)    || 0,
+      daysRemaining:        Number(r.daysRemaining)    || 42,
+      totalDays:            Number(r.totalDays)        || 42,
+      amountRaised:         Number(r.amountRaised)     || 0,
+      fundraisingGoal:      Number(r.fundraisingGoal)  || 2000,
+      sponsors:             Number(r.sponsors)         || 0,
+      challengeEnd:         r.challengeEnd             || '2025-09-01T17:00:00',
+      latestWalkDay:        Number(r.latestWalkDay)    || 0,
+      latestWalkTitle:      r.latestWalkTitle          || 'Coming soon',
+      latestWalkSummary:    r.latestWalkSummary        || '',
+      latestWalkMiles:      Number(r.latestWalkMiles)  || 0,
+      latestWalkSteps:      Number(r.latestWalkSteps)  || 0,
+      latestWalkWeather:    r.latestWalkWeather        || '',
+      latestWalkLocation:   r.latestWalkLocation       || 'Hexham',
+      latestWalkPhoto:      r.latestWalkPhoto          || '',
+    };
+  }
+
+  /* — MILES TAB —
+     Expected columns: mile | status | name | url
+     status values: available | sponsored | completed
+  */
+  if (milesRows && milesRows.length > 0) {
+    sponsorData = milesRows.map(r => ({
+      mile:   Number(r.mile),
+      status: r.status || 'available',
+      name:   r.name   || '',
+      url:    r.url    || '',
+    }));
+    // If sheet has fewer than 150 rows, pad with available
+    while (sponsorData.length < 150) {
+      sponsorData.push({mile: sponsorData.length+1, status:'available', name:'', url:''});
+    }
+  }
+
+  /* — BUSINESSES TAB —
+     Expected columns: name | logoUrl | websiteUrl | displayOrder
+  */
+  if (bizRows && bizRows.length > 0) {
+    businessData = bizRows
+      .filter(r => r.name)
+      .sort((a,b) => Number(a.displayOrder||99) - Number(b.displayOrder||99));
+  }
+
+  /* — GALLERY TAB —
+     Expected columns: photoUrl | caption | date
+  */
+  if (galleryRows && galleryRows.length > 0) {
+    galleryData = galleryRows.filter(r => r.photoUrl);
+  }
+}
+
 const pad     = n  => String(Math.max(0,Math.floor(n))).padStart(2,'0');
 const pct     = (a,b) => Math.min(Math.round((a/b)*100),100);
 
@@ -1196,8 +1326,103 @@ function initReveal() {
 /* ============================================================
    K. INIT
 ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+
+/* ============================================================
+   K. RENDER: LATEST ADVENTURE CARD
+   Reads from challengeData fields populated by the config tab.
+   Replaces the hardcoded adventure card HTML.
+============================================================ */
+function renderAdventureCard() {
+  const d = challengeData;
+  if (!d.latestWalkDay) return; // nothing logged yet, keep placeholder
+
+  const card = document.querySelector('.adventure__card');
+  if (!card) return;
+
+  const photoHTML = d.latestWalkPhoto
+    ? `<img src="${d.latestWalkPhoto}" alt="Photo from Day ${d.latestWalkDay}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`
+    : `<div class="img-ph" role="img" aria-label="Walk photo"><i class="fa-solid fa-camera" aria-hidden="true"></i><span>Walk Photo</span></div>`;
+
+  card.innerHTML = `
+    <div class="adventure__img">
+      ${photoHTML}
+      <div class="adventure__img-badge">
+        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+        Day ${d.latestWalkDay} of ${d.totalDays}
+      </div>
+    </div>
+    <div class="adventure__body">
+      <div class="adventure__day">Day ${d.latestWalkDay} of ${d.totalDays} · Summer 2025</div>
+      <h3 class="adventure__title">${d.latestWalkTitle}</h3>
+      <p class="adventure__summary">${d.latestWalkSummary}</p>
+      <div class="adventure__meta">
+        ${d.latestWalkMiles ? `<span class="adventure__meta-item"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i> ${d.latestWalkMiles} miles</span>` : ''}
+        ${d.latestWalkSteps ? `<span class="adventure__meta-item"><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> ${Number(d.latestWalkSteps).toLocaleString('en-GB')} steps</span>` : ''}
+        ${d.latestWalkWeather ? `<span class="adventure__meta-item"><i class="fa-solid fa-cloud-sun" aria-hidden="true"></i> ${d.latestWalkWeather}</span>` : ''}
+        ${d.latestWalkLocation ? `<span class="adventure__meta-item"><i class="fa-solid fa-map-pin" aria-hidden="true"></i> ${d.latestWalkLocation}</span>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   L. RENDER: BUSINESS SUPPORTERS
+   If businessData has rows, replaces the placeholder tiles.
+============================================================ */
+function renderBusinesses() {
+  if (!businessData.length) return; // keep placeholder tiles
+  const grid = document.getElementById('supporters-grid');
+  if (!grid) return;
+  grid.innerHTML = businessData.map(b => `
+    <a href="${b.websiteUrl || '#'}" class="supporter-tile"
+       target="${b.websiteUrl ? '_blank' : '_self'}"
+       rel="${b.websiteUrl ? 'noopener noreferrer' : ''}"
+       aria-label="${b.name}">
+      ${b.logoUrl
+        ? `<img src="${b.logoUrl}" alt="${b.name} logo" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain">`
+        : `<div class="img-ph" style="background:transparent"><i class="fa-solid fa-building" aria-hidden="true"></i><span>${b.name}</span></div>`}
+    </a>`).join('');
+}
+
+/* ============================================================
+   M. RENDER: GALLERY
+   If galleryData has rows, replaces placeholder items.
+============================================================ */
+function renderGallery() {
+  if (!galleryData.length) return; // keep placeholders
+  const grid = document.querySelector('.gallery__grid');
+  if (!grid) return;
+  grid.innerHTML = galleryData.map((item, i) => `
+    <div class="gallery__item reveal" role="listitem" style="transition-delay:${i*0.06}s"
+         data-src="${item.photoUrl}" data-caption="${item.caption || ''}">
+      <img src="${item.photoUrl}" alt="${item.caption || 'Walk photo'}"
+           loading="lazy"
+           style="width:100%;display:block;border-radius:0"
+           onerror="this.parentElement.innerHTML='<div class=\\"img-ph\\" style=\\"min-height:180px\\"><i class=\\"fa-solid fa-image\\"></i></div>'">
+    </div>`).join('');
+}
+
+/* ============================================================
+   N. LOADING STATE
+   Shows a subtle "Updating…" pulse on the stats while fetching,
+   then removes it. Prevents flash of zero values.
+============================================================ */
+function showLoading() {
+  document.querySelectorAll('.stat-card__value, .hero__stat strong, .hero__prog-figure')
+    .forEach(el => el.style.opacity = '0.4');
+}
+function hideLoading() {
+  document.querySelectorAll('.stat-card__value, .hero__stat strong, .hero__prog-figure')
+    .forEach(el => { el.style.opacity = ''; el.style.transition = 'opacity 0.4s'; });
+}
+
+/* ============================================================
+   O. INIT — async so we can await loadData()
+============================================================ */
+document.addEventListener('DOMContentLoaded', async () => {
+  // Set footer year immediately
   document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // Render with fallback data first (instant, no blank flash)
   renderStats();
   renderCountdown();
   renderMileCards();
@@ -1206,6 +1431,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initShare();
   initLightbox();
   requestAnimationFrame(initReveal);
+
+  // Then fetch live data from Google Sheets and re-render
+  const hasSheets = Object.values(SHEET_URLS).some(u => u !== '');
+  if (hasSheets) {
+    showLoading();
+    await loadData();
+    hideLoading();
+    // Re-render everything that could have changed
+    renderStats();
+    renderCountdown();
+    renderMileCards();
+    renderAdventureCard();
+    renderBusinesses();
+    renderGallery();
+    // Re-observe any new .reveal elements added by renders
+    requestAnimationFrame(initReveal);
+  }
 });
 </script>
 </body>
