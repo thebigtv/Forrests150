@@ -73,8 +73,9 @@
     .section-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:var(--text-dark);line-height:1.15;margin-bottom:.9rem;letter-spacing:-.02em}
     .section-intro{font-size:1.08rem;color:var(--text-mid);max-width:580px;line-height:1.7}
     /* scroll reveal */
-    .reveal{opacity:0;transform:translateY(30px);transition:opacity .65s var(--ease-out),transform .65s var(--ease-out)}
+    .reveal{transition:opacity .65s var(--ease-out),transform .65s var(--ease-out)}
     .reveal.visible{opacity:1;transform:translateY(0)}
+    @keyframes reveal-fallback{to{opacity:1;transform:none}}
     /* img placeholder */
     .img-ph{background:linear-gradient(135deg,var(--green-pale) 0%,var(--sky-pale) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--text-light);font-size:.85rem;font-weight:700}
     .img-ph i{font-size:2.2rem;opacity:.35}
@@ -1422,7 +1423,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Set footer year immediately
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-  // Render with fallback data first (instant, no blank flash)
+  // Always render fallback data first — page is fully visible before any fetch
   renderStats();
   renderCountdown();
   renderMileCards();
@@ -1430,22 +1431,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderFAQ();
   initShare();
   initLightbox();
+
+  // Reveal runs immediately — never blocked by network
   requestAnimationFrame(initReveal);
 
-  // Then fetch live data from Google Sheets and re-render.
-  // Fallback data is always rendered first so the page is never blank.
-  // loadData() only overwrites a data source if the Sheet tab has real content.
+  // Attempt to fetch from Google Sheets — totally isolated so any
+  // failure (CORS, network, empty sheet) cannot affect the page
   const hasSheets = Object.values(SHEET_URLS).some(u => u !== '');
   if (hasSheets) {
-    await loadData();
-    // Re-render everything — if Sheet tabs were empty, fallback data is unchanged
-    renderStats();
-    renderCountdown();
-    renderMileCards();
-    renderAdventureCard();
-    renderBusinesses();
-    renderGallery();
-    requestAnimationFrame(initReveal);
+    try {
+      await loadData();
+      renderStats();
+      renderCountdown();
+      renderMileCards();
+      renderAdventureCard();
+      renderBusinesses();
+      renderGallery();
+      // Re-observe any newly rendered elements
+      requestAnimationFrame(initReveal);
+    } catch (err) {
+      // Sheet fetch failed — fallback data already showing, nothing to do
+      console.warn('Sheet data unavailable, using fallback:', err);
+    }
   }
 });
 </script>
