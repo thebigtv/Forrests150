@@ -416,10 +416,10 @@
 
     <div class="hero__photo reveal" style="transition-delay:.12s">
       <div class="hero__photo-frame">
-        <div class="img-ph" role="img" aria-label="Photo of Forrest on his walking challenge">
-          <i class="fa-solid fa-person-hiking" aria-hidden="true"></i>
-          <span>Forrest's Photo</span>
-        </div>
+        <img src="https://raw.githubusercontent.com/thebigtv/Forrests150/5502e571bf40cbe8a8f2a653d9cac3dbea594d48/IMG_3176.jpeg"
+             alt="Forrest, age 7, ready to walk 150 miles for Sele First School"
+             style="width:100%;height:100%;object-fit:cover;object-position:center top"
+             loading="eager" />
       </div>
       <div class="hero__badge" aria-hidden="true">
         <div class="hero__badge-num" id="hero-badge-miles">0</div>
@@ -544,10 +544,10 @@
     <div class="meet__inner">
       <div class="meet__photo reveal">
         <div class="meet__photo-frame">
-          <div class="img-ph" role="img" aria-label="Portrait photo of Forrest">
-            <i class="fa-solid fa-child-reaching" aria-hidden="true"></i>
-            <span>Forrest's Photo</span>
-          </div>
+          <img src="https://raw.githubusercontent.com/thebigtv/Forrests150/5502e571bf40cbe8a8f2a653d9cac3dbea594d48/IMG_3176.jpeg"
+               alt="Forrest, age 7, Sele First School, Hexham"
+               style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:inherit"
+               loading="lazy" />
         </div>
         <div class="meet__school-badge" aria-hidden="true">
           <div class="emoji">🏫</div>
@@ -1095,8 +1095,14 @@ async function loadData() {
   }
 }
 
-const pad     = n  => String(Math.max(0,Math.floor(n))).padStart(2,'0');
-const pct     = (a,b) => Math.min(Math.round((a/b)*100),100);
+
+/* ============================================================
+   B. UTILITIES
+============================================================ */
+const fmt     = n => Number(n).toLocaleString('en-GB');
+const setText = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+const pad     = n => String(Math.max(0, Math.floor(n))).padStart(2, '0');
+const pct     = (a, b) => Math.min(Math.round((a / b) * 100), 100);
 
 /* ============================================================
    C. RENDER STATS
